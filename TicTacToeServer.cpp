@@ -93,7 +93,10 @@ void startGame(int client1, int client2) {
 		}			
 		chooseTurn(currentTurn,client1, client2) ;
 	}while(gameRunning); 
+	string res = "E";
 	string message = "The winner is " + winner.move ; 
+	send(client1,res.c_str() , sizeof(res), 0) ;
+	send(client1,res.c_str() , sizeof(res), 0) ;
 	send(client1,message.c_str(),message.size(),0 ); 
 	send(client2,message.c_str(),message.size(),0); 
 }

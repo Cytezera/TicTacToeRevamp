@@ -50,10 +50,23 @@ void runGame(int clientSocket){
 
 	vector<vector<char>> board(3,vector<char>(3)); 
 	char buffer[1024] = {0}; 
-	recv(clientSocket, buffer, sizeof(buffer),0); 
-	deserialize(buffer,board); 
-	displayBoard(board); 
-	chooseTile(clientSocket); 
+	bool endGame = true ;
+	while (endGame) {
+		recv(clientSocket, buffer, sizeof(buffer),0); 
+		deserialize(buffer,board); 
+		displayBoard(board); 
+		chooseTile(clientSocket); 
+		recv(clientSocket ,buffer, sizeof(buffer), 0) ; 
+		if (buffer[0] == 'E'){
+			cout << "Game has ended" << endl;
+			recv(clientSocket,buffer,sizeof(buffer),0 ) ; 
+			cout << buffer << endl; 
+			recv(clientSocket,buffer,sizeof(buffer),0 ) ; 
+			cout << buffer << endl; 
+			endGame = false;
+		}
+	}
+
 }
 void connectServer(){
 	int clientSocket; 
