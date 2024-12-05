@@ -7,7 +7,6 @@
 #include <cstring> 
 using namespace std; 
 
-extern string serialize(const vector<vector<string>> &board); 
 struct Turn{
 
 	string move; 
@@ -55,11 +54,21 @@ void placeTile(vector<vector<string>> &board,  int client1, int client2,Turn cur
 			message = "Turn end" ; 
 			tilePlaced = true; 	
 		}else {
-			string message = "Invalid input, please try again " ; 
+			message = "Invalid input, please try again " ; 
 			tilePlaced = false; 
 		}
 		send(player,message.c_str(),message.size(), 0 ) ;	
 	}while(!tilePlaced);
+	
+}
+string serialize(vector<vector<string>> board) {
+	string result; 
+	for (int i = 0; i < 3; i ++ ) {
+		for ( int j= 0; j <3 ; j ++ ){
+			result += board[i][j];
+		}
+	}
+	return result; 
 }
 void sendBoard(vector<vector<string>> board, int client1, int client2) {
 
